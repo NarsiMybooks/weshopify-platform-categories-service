@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: ${APP_NAME:weshopify-platform-categories-service}
+  profiles:
+    active:
+    - ${PROFILES_ACTIVE:dev}
+    
+    
+server:
+  port: ${APP_PORT:5016}
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - dev
+  datasource:
+    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+    url: ${DB_PROTOCOL:jdbc}:${DB_TYPE:mysql}://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SCHEMA:weshopify-categories-db}
+    username: ${DB_USER_NAME:root}
+    password: ${DB_PASSWORD:root}
+  jpa:
+    hibernate:
+      ddl-auto: update
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - qa
+  datasource:
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
+    url: ${DB_PROTOCOL:jdbc}:${DB_TYPE:h2}:${DB_HOST:mem}:${DB_SCHEMA:weshopify-categories-db}
+    username: ${DB_USER_NAME:sa}
+    password: ${DB_PASSWORD:root}
+  h2:
+    console:
+      enabled: ${H2_CONSOLE_ENABLED:true}
+      path: ${H2_CONSOLE_PATH:/h2Console}
