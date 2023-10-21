@@ -4,11 +4,37 @@ spring:
   profiles:
     active:
     - ${PROFILES_ACTIVE:dev}
-    
-    
+  jpa:
+    show-sql: true
+
 server:
   port: ${APP_PORT:5016}
-
+  
+logging:
+  file:
+    name: weshopify-categories
+  level:
+    root: info 
+      
+   #pattern: 
+     #level: "%5p [${spring.zipkin.service.name:${spring.application.name:}},%X{traceId:-},%X{spanId:-}]"
+management:
+  zipkin:
+    tracing:
+      endpoint: http://${ZIPKIN_HOST:127.0.0.1}:${ZIPKIN_PORT:9411}/api/v2/spans
+      
+eureka:
+  client:
+    fetch-registry: ${FETCH_REGISTRY:true}
+    register-with-eureka: ${REGISTER_WITH_REGISTRY:true}
+    healthcheck:
+      enabled: ${REGISTRY_HEALTH_CHECK:true}
+    service-url:
+      defaultZone: http://${SERVICE_REGISTRY_HOST:localhost}:${SERVICE_REGISTRY_PORT:8761}/eureka/
+  instance:
+    hostname: ${SERVICE_REGISTRY_HOST:localhost}
+    prefer-ip-address: ${REGISTRY_PREF_IP_ADDR:true}
+    
 ---
 spring:
   config:
